@@ -20,4 +20,6 @@ public class PrepRecommendationDto {
     private Integer recommendedQuantity;
     private Double weatherMultiplier;
     private String rationale;
+    private String weatherCondition;
+    private Double forecastTemperatureCelsius;
 }
