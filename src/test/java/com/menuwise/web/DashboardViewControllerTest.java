@@ -63,4 +63,20 @@ class DashboardViewControllerTest {
                 .andExpect(view().name("pages/simulator"))
                 .andExpect(model().attribute("activeRoute", "simulator"));
     }
+
+    @Test
+    void testWeatherRoute() throws Exception {
+        mockMvc.perform(get("/weather"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pages/weather"))
+                .andExpect(model().attribute("activeRoute", "weather"));
+    }
+
+    @Test
+    void testRescueRoute() throws Exception {
+        mockMvc.perform(get("/rescue"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pages/rescue"))
+                .andExpect(model().attribute("activeRoute", "rescue"));
+    }
 }

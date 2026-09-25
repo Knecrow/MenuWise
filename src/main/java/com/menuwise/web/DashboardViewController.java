@@ -41,4 +41,18 @@ public class DashboardViewController {
         model.addAttribute("pageTitle", "What-If Simulator");
         return "pages/simulator";
     }
+
+    @GetMapping("/weather")
+    public String weather(Model model) {
+        model.addAttribute("activeRoute", "weather");
+        model.addAttribute("pageTitle", "Weather Prep");
+        return "pages/weather";
+    }
+
+    @GetMapping("/rescue")
+    public String rescue(Model model) {
+        model.addAttribute("activeRoute", "rescue");
+        model.addAttribute("pageTitle", "Rescue Menu");
+        return "pages/rescue";
+    }
 }

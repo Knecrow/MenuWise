@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::mainContent}, 'Rescue Menu', 'rescue')}">
+<body>
+
+<div th:fragment="mainContent">
+    <div class="page-header">
+        <h1 class="page-title">Rescue Menu</h1>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="grid-stats" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        <div class="card-stat">
+            <div class="card-stat-header">
+                <span class="card-stat-title">At-Risk Items</span>
+            </div>
+            <div class="card-stat-value">3</div>
+        </div>
+
+        <div class="card-stat">
+            <div class="card-stat-header">
+                <span class="card-stat-title">Earliest Expiry</span>
+            </div>
+            <div class="card-stat-value">2 Days</div>
+        </div>
+
+        <div class="card-stat">
+            <div class="card-stat-header">
+                <span class="card-stat-title">Active Specials</span>
+            </div>
+            <div class="card-stat-value">2</div>
+        </div>
+    </div>
+
+    <!-- Suggested Rescue Dishes Table -->
+    <div class="panel">
+        <div class="panel-header">
+            <h2 class="panel-title">Expiry & Recipe Suggestions</h2>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Ingredient</th>
+                        <th>Current Stock</th>
+                        <th>Expiry</th>
+                        <th>Suggested Dish</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 600;">Heavy Cream</td>
+                        <td>3.5 L</td>
+                        <td><span class="badge-danger">2 Days</span></td>
+                        <td>Creamy Fettuccine</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Romaine Lettuce</td>
+                        <td>4.0 kg</td>
+                        <td><span class="badge-danger">2 Days</span></td>
+                        <td>Caesar Salad</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Strawberries</td>
+                        <td>1.8 kg</td>
+                        <td><span class="badge-warning">3 Days</span></td>
+                        <td>Berry Tart</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

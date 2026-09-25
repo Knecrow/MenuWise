@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::mainContent}, 'Weather Prep', 'weather')}">
+<body>
+
+<div th:fragment="mainContent">
+    <div class="page-header">
+        <h1 class="page-title">Weather Prep</h1>
+    </div>
+
+    <!-- Live Weather Info -->
+    <div class="grid-stats" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        <div class="card-stat">
+            <div class="card-stat-header">
+                <span class="card-stat-title">Condition</span>
+            </div>
+            <div class="card-stat-value">Rainy</div>
+        </div>
+
+        <div class="card-stat">
+            <div class="card-stat-header">
+                <span class="card-stat-title">Temperature</span>
+            </div>
+            <div class="card-stat-value">18.0°C</div>
+        </div>
+
+        <div class="card-stat">
+            <div class="card-stat-header">
+                <span class="card-stat-title">Station</span>
+            </div>
+            <div class="card-stat-value">Local City</div>
+        </div>
+    </div>
+
+    <!-- Prep Guidelines Table -->
+    <div class="panel">
+        <div class="panel-header">
+            <h2 class="panel-title">Kitchen Prep Guide</h2>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Weather Factor</th>
+                        <th>Prep Guideline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 600;">Soups & Hot Food</td>
+                        <td>Rain / Cold</td>
+                        <td><span class="badge-success">Increase Prep</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Hot Beverages</td>
+                        <td>Cold Weather</td>
+                        <td><span class="badge-success">Increase Prep</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Salads & Cold Drinks</td>
+                        <td>Rain / Overcast</td>
+                        <td><span class="badge-warning">Reduce Batch</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
