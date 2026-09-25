@@ -22,7 +22,7 @@ public class Item {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
-    private Category category;
+    private Category category; // many item in one category
 
     @Column(nullable = false)
     private Double costPrice;

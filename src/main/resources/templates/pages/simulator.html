@@ -19,16 +19,16 @@
                 <div>
                     <label style="font-size: 0.875rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; display: block;">Select Item</label>
                     <select style="width: 100%; padding: 0.75rem 1rem; border: none; background-color: var(--bg-canvas); border-radius: 9999px; font-size: 0.9rem; color: var(--text-main);">
-                        <option>Grilled Chicken Breast — $14.99</option>
-                        <option>Classic Cheeseburger — $12.50</option>
-                        <option>Creamy Fettuccine Alfredo — $13.99</option>
-                        <option>Molten Chocolate Cake — $6.50</option>
+                        <option>Kacchi Biryani — ৳ 450.00</option>
+                        <option>Fish &amp; Chips — ৳ 520.00</option>
+                        <option>Chicken Roast &amp; Polao — ৳ 380.00</option>
+                        <option>Shepherd's Pie — ৳ 480.00</option>
                     </select>
                 </div>
 
                 <div>
                     <label style="font-size: 0.875rem; font-weight: 600; color: var(--text-muted); display: block;">Base Price</label>
-                    <div style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-top: 0.25rem;">$14.99</div>
+                    <div style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-top: 0.25rem;">৳ 450.00</div>
                 </div>
 
                 <!-- Price Adjustment Range Slider -->
@@ -63,7 +63,7 @@
             <div class="grid-stats" style="grid-template-columns: 1fr 1fr; margin-bottom: 0;">
                 <div class="card-stat">
                     <div class="card-stat-title">Projected Price</div>
-                    <div class="card-stat-value" id="projPrice">$14.99</div>
+                    <div class="card-stat-value" id="projPrice">৳ 450.00</div>
                     <div class="card-stat-footer">
                         <span class="badge-success">Base</span>
                     </div>
@@ -79,17 +79,17 @@
 
                 <div class="card-stat">
                     <div class="card-stat-title">Projected Revenue</div>
-                    <div class="card-stat-value" id="projRevenue">$1,798.80</div>
+                    <div class="card-stat-value" id="projRevenue">৳ 54,000.00</div>
                     <div class="card-stat-footer">
-                        <span class="badge-success">+$0.00</span>
+                        <span class="badge-success">+৳ 0.00</span>
                     </div>
                 </div>
 
                 <div class="card-stat">
                     <div class="card-stat-title">Projected Profit</div>
-                    <div class="card-stat-value" id="projProfit">$1,162.80</div>
+                    <div class="card-stat-value" id="projProfit">৳ 32,400.00</div>
                     <div class="card-stat-footer">
-                        <span class="badge-success">Margin 64.6%</span>
+                        <span class="badge-success">Margin 60.0%</span>
                     </div>
                 </div>
             </div>
@@ -106,9 +106,9 @@
             const projRevenue = document.getElementById("projRevenue");
             const projProfit = document.getElementById("projProfit");
 
-            const basePrice = 14.99;
+            const basePrice = 450.00;
             const baseDemand = 120;
-            const unitCost = 5.30;
+            const unitCost = 180.00;
             const elasticity = -1.2; // Elasticity coefficient
 
             function updateSimulation() {
@@ -122,12 +122,11 @@
                 const newRevenue = newPrice * newDemand;
                 const totalCost = unitCost * newDemand;
                 const newProfit = newRevenue - totalCost;
-                const marginPercent = (newProfit / newRevenue) * 100;
 
-                projPrice.textContent = "$" + newPrice.toFixed(2);
+                projPrice.textContent = "৳ " + newPrice.toFixed(2);
                 projDemand.textContent = newDemand + " units";
-                projRevenue.textContent = "$" + newRevenue.toFixed(2);
-                projProfit.textContent = "$" + newProfit.toFixed(2);
+                projRevenue.textContent = "৳ " + newRevenue.toFixed(2);
+                projProfit.textContent = "৳ " + newProfit.toFixed(2);
             }
 
             if (slider) {

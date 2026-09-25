@@ -109,11 +109,14 @@ public class WeatherAdaptivePrepService {
 
     private boolean isComfortHotDish(String name, String category) {
         return name.contains("soup") || name.contains("cocoa") || name.contains("fettuccine")
-                || name.contains("stew") || name.contains("curry") || name.contains("hot");
+                || name.contains("stew") || name.contains("curry") || name.contains("hot")
+                || name.contains("biryani") || name.contains("bhuna") || name.contains("roast")
+                || name.contains("pie");
     }
 
     private boolean isChilledOrRefreshing(String name, String category) {
         return name.contains("salad") || name.contains("iced") || name.contains("latte")
-                || name.contains("smoothie") || name.contains("juice") || name.contains("cold");
+                || name.contains("smoothie") || name.contains("juice") || name.contains("cold")
+                || name.contains("borhani") || name.contains("doi");
     }
 }
