@@ -4,55 +4,62 @@
 <body>
 <div th:fragment="mainContent">
 
-    <div class="page-header">
-        <h1 class="page-title">Weather Prep</h1>
-        <p class="page-subtitle">Real-time weather signals driving intelligent kitchen prep adjustments</p>
+    <div class="sub-header-bar">
+        <div class="sub-header-left">
+            <h1 class="sub-header-title">Weather Prep</h1>
+        </div>
+        <div class="sub-header-right">
+            <div class="date-range-pill">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                </svg>
+                <span>Dhaka, Bangladesh</span>
+            </div>
+            <button class="btn-primary" onclick="loadWeatherData()" id="refreshBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                Refresh
+            </button>
+        </div>
     </div>
 
-    <!-- Weather Hero Card -->
-    <div id="weatherHeroCard" style="background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%); border-radius: 1.25rem; padding: 1.15rem 1.65rem; margin-bottom: 1rem; box-shadow: 0 10px 30px rgba(15,39,68,0.2); color: #fff; position:relative; overflow:hidden;">
-        <div style="position:absolute; top:-40px; right:-40px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04);"></div>
-        <div style="position:absolute; bottom:-60px; left:-20px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,0.03);"></div>
+    <!-- Weather Signal Hero Card -->
+    <div id="weatherHeroCard" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 1.25rem; padding: 1.25rem 1.65rem; margin-bottom: 1.25rem; box-shadow: 0 8px 24px rgba(15,23,42,0.12); color: #fff; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:-40px; right:-40px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.03);"></div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; position:relative; z-index:1;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.25rem; position:relative; z-index:1;">
             <div>
-                <div style="font-size:0.7rem; font-weight:700; opacity:0.65; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">LIVE WEATHER SIGNAL</div>
-                <div style="display:flex; align-items:baseline; gap:0.75rem;">
-                    <div style="font-size:2.2rem; font-weight:800; letter-spacing:-0.04em;" id="heroTemp">—°C</div>
+                <div style="font-size:0.7rem; font-weight:700; color:#c8f53c; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.25rem;">LIVE WEATHER SIGNAL</div>
+                <div style="display:flex; align-items:baseline; gap:0.85rem;">
+                    <div style="font-size:2.4rem; font-weight:800; letter-spacing:-0.04em;" id="heroTemp">—°C</div>
                     <div>
-                        <div style="font-size:1.15rem; font-weight:700;" id="heroCondition">Loading...</div>
-                        <div style="font-size:0.78rem; opacity:0.7;" id="heroCity">Fetching location...</div>
+                        <div style="font-size:1.15rem; font-weight:800;" id="heroCondition">Loading...</div>
+                        <div style="font-size:0.78rem; opacity:0.7;" id="heroCity">Dhaka, Bangladesh</div>
                     </div>
                 </div>
             </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; text-align:center;">
-                <div style="background:rgba(255,255,255,0.1); border-radius:0.75rem; padding:0.45rem 0.85rem;">
-                    <div style="font-size:0.68rem; opacity:0.65; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;">Humidity</div>
-                    <div style="font-size:1.15rem; font-weight:800;" id="heroHumidity">—%</div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1.4fr; gap:0.65rem; text-align:center;">
+                <div style="background:rgba(255,255,255,0.08); border-radius:0.85rem; padding:0.55rem 0.85rem;">
+                    <div style="font-size:0.68rem; opacity:0.7; font-weight:700; text-transform:uppercase;">Humidity</div>
+                    <div style="font-size:1.15rem; font-weight:800; margin-top:0.1rem;" id="heroHumidity">—%</div>
                 </div>
-                <div style="background:rgba(255,255,255,0.1); border-radius:0.75rem; padding:0.45rem 0.85rem;">
-                    <div style="font-size:0.68rem; opacity:0.65; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;">Rain Prob.</div>
-                    <div style="font-size:1.15rem; font-weight:800;" id="heroRain">—%</div>
+                <div style="background:rgba(255,255,255,0.08); border-radius:0.85rem; padding:0.55rem 0.85rem;">
+                    <div style="font-size:0.68rem; opacity:0.7; font-weight:700; text-transform:uppercase;">Rain Prob.</div>
+                    <div style="font-size:1.15rem; font-weight:800; margin-top:0.1rem;" id="heroRain">—%</div>
                 </div>
-                <div style="background:rgba(255,255,255,0.1); border-radius:0.75rem; padding:0.45rem 0.85rem; grid-column:1/-1;">
-                    <div style="font-size:0.68rem; opacity:0.65; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;">Kitchen Impact</div>
-                    <div style="font-size:0.88rem; font-weight:800;" id="heroImpact">—</div>
+                <div style="background:rgba(255,255,255,0.08); border-radius:0.85rem; padding:0.55rem 0.85rem;">
+                    <div style="font-size:0.68rem; opacity:0.7; font-weight:700; text-transform:uppercase;">Impact Advisory</div>
+                    <div style="font-size:0.85rem; font-weight:800; color:#c8f53c; margin-top:0.15rem;" id="heroImpact">—</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Prep Recommendations -->
-    <div class="panel" style="padding:0; overflow:hidden;">
-        <div style="padding:0.75rem 1.15rem; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
-            <div>
-                <h2 class="panel-title" style="margin:0;">Kitchen Prep Recommendations</h2>
-                <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.2rem;">Today's weather-adjusted prep quantities for each menu item</p>
-            </div>
-            <button class="btn-secondary" onclick="loadWeatherData()" id="refreshBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-                Refresh
-            </button>
+    <!-- Recommendations Table Card Panel -->
+    <div class="card-panel" style="padding:0; overflow:hidden;">
+        <div style="padding:1rem 1.35rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(0,0,0,0.05);">
+            <h3 class="card-panel-title" style="margin:0;">Kitchen Prep Recommendations</h3>
+            <span style="font-size:0.78rem; font-weight:700; color:var(--text-muted);">Weather Multipliers</span>
         </div>
 
         <div id="prepLoadingState" style="padding: 3rem; text-align:center; color:var(--text-muted);">
@@ -61,47 +68,19 @@
         </div>
 
         <div class="table-responsive" id="prepTableWrapper" style="display:none;">
-            <table class="data-table">
+            <table class="calescence-table">
                 <thead>
                     <tr>
                         <th>Menu Item</th>
-                        <th>Category</th>
+                        <th>Condition</th>
                         <th>Baseline Prep</th>
-                        <th>Weather Multiplier</th>
+                        <th>Multiplier</th>
                         <th>Recommended Qty</th>
-                        <th>Rationale</th>
+                        <th style="text-align:right;">Rationale</th>
                     </tr>
                 </thead>
                 <tbody id="prepTableBody"></tbody>
             </table>
-        </div>
-    </div>
-
-    <!-- Prep Guide Legend -->
-    <div class="panel" style="background: linear-gradient(135deg, #f0fdf4, #ecfdf5);">
-        <h3 style="font-size:1rem; font-weight:800; color: var(--espresso-900); margin-bottom:1rem;">How Weather-Adaptive Prep Works</h3>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem;">
-            <div style="display:flex; gap:0.75rem; align-items:flex-start;">
-                <div style="font-size:1.5rem;">🌧️</div>
-                <div>
-                    <div style="font-weight:700; font-size:0.875rem;">Rain / Cold (&lt;12°C)</div>
-                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.15rem;">Hot comfort foods +35%, chilled drinks −25%</div>
-                </div>
-            </div>
-            <div style="display:flex; gap:0.75rem; align-items:flex-start;">
-                <div style="font-size:1.5rem;">☀️</div>
-                <div>
-                    <div style="font-weight:700; font-size:0.875rem;">Warm / Sunny (&gt;24°C)</div>
-                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.15rem;">Chilled drinks &amp; salads +30%, heavy mains −15%</div>
-                </div>
-            </div>
-            <div style="display:flex; gap:0.75rem; align-items:flex-start;">
-                <div style="font-size:1.5rem;">🌤️</div>
-                <div>
-                    <div style="font-weight:700; font-size:0.875rem;">Moderate (12–24°C)</div>
-                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.15rem;">All items at baseline prep quantity</div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -111,7 +90,6 @@ document.addEventListener('DOMContentLoaded', loadWeatherData);
 async function loadWeatherData() {
     const btn = document.getElementById('refreshBtn');
     btn.disabled = true;
-    btn.innerHTML = '⏳ Loading...';
 
     try {
         const [weatherRes, prepRes] = await Promise.all([
@@ -129,7 +107,6 @@ async function loadWeatherData() {
         document.getElementById('prepLoadingState').innerHTML = '⚠️ Could not load weather data.';
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Refresh`;
     }
 }
 
@@ -139,15 +116,16 @@ function renderWeatherHero(weather) {
         'Thunderstorm': '⛈️', 'Drizzle': '🌦️', 'Mist': '🌫️', 'Fog': '🌫️'
     };
 
+    const emoji = condEmoji[weather.condition] || '🌤️';
     document.getElementById('heroTemp').textContent = `${weather.temperatureCelsius?.toFixed(1) || '—'}°C`;
-    document.getElementById('heroCondition').textContent = `${condEmoji[weather.condition] || '🌤️'} ${weather.condition || '—'}`;
+    document.getElementById('heroCondition').textContent = `${emoji} ${weather.condition || '—'}`;
     document.getElementById('heroCity').textContent = 'Dhaka, Bangladesh';
     document.getElementById('heroHumidity').textContent = `${weather.humidity || '—'}%`;
     document.getElementById('heroRain').textContent = `${weather.rainProbability != null ? Math.round(weather.rainProbability * 100) : '—'}%`;
 
     const impactText = weather.isInclementWeather
-        ? '⬆️ Increase hot food prep' : weather.temperatureCelsius > 24
-        ? '⬆️ Increase chilled drinks' : '✅ Normal baseline prep';
+        ? '⬆️ Increase comfort food prep' : weather.temperatureCelsius > 24
+        ? '⬆️ Increase chilled drinks' : '✅ Baseline prep optimal';
     document.getElementById('heroImpact').textContent = impactText;
 }
 
@@ -158,17 +136,18 @@ function renderPrepTable(preps) {
     const tbody = document.getElementById('prepTableBody');
     tbody.innerHTML = preps.map(p => {
         const mult = p.weatherMultiplier || 1.0;
-        const multColor = mult > 1.0 ? '#059669' : mult < 1.0 ? '#e11d48' : '#92400e';
         const multLabel = mult > 1.0 ? `+${((mult-1)*100).toFixed(0)}%` : mult < 1.0 ? `${((mult-1)*100).toFixed(0)}%` : 'Baseline';
-        const multBadge = mult > 1.0 ? 'badge-success' : mult < 1.0 ? 'badge-danger' : 'badge-warning';
+        const multBadge = mult > 1.0 ? 'badge-growth' : mult < 1.0 ? 'badge-danger' : 'badge-lime';
 
         return `<tr>
-            <td style="font-weight:700;">${p.itemName}</td>
-            <td style="color:var(--text-muted); font-size:0.85rem;">${p.weatherCondition || '—'}</td>
-            <td>${p.baselineQuantity} units</td>
+            <td>
+                <div style="font-weight:700; color:var(--text-main); font-size:0.88rem;">${p.itemName}</div>
+            </td>
+            <td style="color:var(--text-muted); font-size:0.82rem;">${p.weatherCondition || '—'}</td>
+            <td style="font-size:0.84rem;">${p.baselineQuantity} units</td>
             <td><span class="${multBadge}">${multLabel}</span></td>
-            <td style="font-weight:800; color:${multColor};">${p.recommendedQuantity} units</td>
-            <td style="font-size:0.8rem; color:var(--text-muted); max-width:280px; white-space:normal; line-height:1.4;">${p.rationale || '—'}</td>
+            <td style="font-weight:800; color:var(--text-main); font-size:0.92rem;">${p.recommendedQuantity} units</td>
+            <td style="font-size:0.8rem; color:var(--text-muted); text-align:right; max-width:280px;">${p.rationale || '—'}</td>
         </tr>`;
     }).join('');
 }

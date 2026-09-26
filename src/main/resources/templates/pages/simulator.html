@@ -4,114 +4,130 @@
 <body>
 <div th:fragment="mainContent">
 
-    <div class="page-header">
-        <h1 class="page-title">What-If Simulator</h1>
-        <p class="page-subtitle">Model the impact of price changes on demand, revenue &amp; profit margin using elasticity theory</p>
+    <div class="sub-header-bar">
+        <div class="sub-header-left">
+            <h1 class="sub-header-title">What-If Pricing Simulator</h1>
+        </div>
+        <div class="sub-header-right">
+            <div class="date-range-pill">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/>
+                </svg>
+                <span>Elasticity: -1.2</span>
+            </div>
+        </div>
     </div>
 
-    <div style="display:grid; grid-template-columns:1.1fr 1.8fr; gap:1rem; align-items:start;">
+    <!-- Functional 2-Column Simulation Layout -->
+    <div style="display:grid; grid-template-columns: 1fr 1.6fr; gap:1.25rem; align-items:start; margin-bottom:1.25rem;">
 
-        <!-- Controls Panel -->
-        <div class="panel" style="margin-bottom:0; position:sticky; top:1rem;">
-            <h2 class="panel-title" style="margin-bottom:0.85rem;">Simulation Controls</h2>
+        <!-- Left: Controls Card -->
+        <div class="card-panel">
+            <div class="card-panel-header">
+                <h3 class="card-panel-title">Simulation Controls</h3>
+            </div>
 
-            <div style="margin-bottom:0.85rem;">
-                <label class="sim-label">Select Item</label>
-                <select id="itemSelect" onchange="loadItemAndSimulate()" style="width:100%; padding:0.55rem 0.85rem; border:1px solid var(--border-color); border-radius:0.75rem; font-size:0.85rem; font-family:inherit; color:var(--espresso-900); background:var(--bg-canvas); outline:none; cursor:pointer; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--coral-500)'" onblur="this.style.borderColor='var(--border-color)'">
+            <div style="margin-bottom:1rem;">
+                <label style="display:block; font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.35rem;">Select Item</label>
+                <select id="itemSelect" onchange="loadItemAndSimulate()" style="width:100%; padding:0.55rem 0.85rem; border:1px solid var(--border-color); border-radius:9999px; font-size:0.85rem; font-family:inherit; color:var(--text-main); background:var(--bg-canvas); outline:none; cursor:pointer;">
                     <option value="">Loading items...</option>
                 </select>
             </div>
 
-            <div style="margin-bottom:1rem;">
+            <div style="margin-bottom:1.25rem;">
                 <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.35rem;">
-                    <label class="sim-label">Price Change</label>
-                    <div style="display:flex; align-items:baseline; gap:0.25rem;">
-                        <span id="sliderValueDisplay" style="font-size:1.5rem; font-weight:800; color:var(--espresso-900); line-height:1;">0</span>
+                    <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Price Change</label>
+                    <div style="display:flex; align-items:baseline; gap:0.2rem;">
+                        <span id="sliderValueDisplay" style="font-size:1.5rem; font-weight:800; color:var(--text-main); line-height:1;">0</span>
                         <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted);">%</span>
                     </div>
                 </div>
                 <input type="range" id="priceSlider" min="-30" max="50" value="0" step="1"
                        oninput="onSliderInput(this.value)"
-                       style="width:100%; appearance:none; height:6px; border-radius:9999px; background:linear-gradient(to right, var(--coral-500) 50%, #e8ddd7 50%); outline:none; cursor:pointer;">
+                       style="width:100%; appearance:none; height:6px; border-radius:9999px; background:linear-gradient(to right, #3b82f6 50%, #e2e8f0 50%); outline:none; cursor:pointer;">
                 <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-muted); font-weight:700; margin-top:0.25rem;">
-                    <span>-30%</span><span>0</span><span>+50%</span>
+                    <span>-30%</span><span>0%</span><span>+50%</span>
                 </div>
             </div>
 
-            <button class="btn-primary" onclick="runSimulation()" id="simBtn" style="width:100%; padding:0.55rem 1rem; font-size:0.85rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <button class="btn-primary" onclick="runSimulation()" id="simBtn" style="width:100%; padding:0.65rem 1rem; font-size:0.875rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                 Run Simulation
             </button>
-
-            <!-- Elasticity Info -->
-            <div style="background:var(--bg-canvas); border-radius:0.75rem; padding:0.75rem; margin-top:0.85rem; border:1px solid var(--border-color);">
-                <div style="font-size:0.7rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.35rem;">How it works</div>
-                <div style="font-size:0.78rem; color:var(--espresso-900); line-height:1.45;">
-                    Uses <strong>Price Elasticity of Demand (PED = −1.2)</strong>: a 10% price increase → ~12% demand drop.
-                </div>
-            </div>
         </div>
 
-        <!-- Results Panel -->
-        <div>
-            <!-- Result Cards -->
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.85rem;" id="resultCards">
-                <div class="sim-card" style="padding:0.75rem 1rem;"><div class="sim-card-label">New Price</div><div class="sim-card-value" style="font-size:1.35rem;" id="resNewPrice">—</div></div>
-                <div class="sim-card" style="padding:0.75rem 1rem;"><div class="sim-card-label">Est. Demand</div><div class="sim-card-value" style="font-size:1.35rem;" id="resDemand">—</div></div>
-                <div class="sim-card" style="padding:0.75rem 1rem;"><div class="sim-card-label">Revenue Δ</div><div class="sim-card-value" style="font-size:1.35rem;" id="resRevDelta">—</div></div>
-                <div class="sim-card" style="padding:0.75rem 1rem;"><div class="sim-card-label">Profit Δ</div><div class="sim-card-value" style="font-size:1.35rem;" id="resProfitDelta">—</div></div>
+        <!-- Right: Results Card -->
+        <div class="card-panel">
+            <div class="card-panel-header">
+                <h3 class="card-panel-title">Projected Outcome</h3>
+                <span class="badge-growth" id="resProfitDelta">—</span>
             </div>
 
-            <!-- Margin bar -->
-            <div class="panel" style="margin-bottom:0.85rem; padding:0.85rem 1.15rem;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-                    <span style="font-size:0.82rem; font-weight:700; color:var(--espresso-900);">Gross Margin</span>
-                    <div style="display:flex; gap:1.25rem;">
-                        <span style="font-size:0.78rem; color:var(--text-muted); font-weight:700;">Before: <span id="marginBefore" style="color:var(--espresso-900);">—</span></span>
-                        <span style="font-size:0.78rem; color:var(--text-muted); font-weight:700;">After: <span id="marginAfter" style="color:var(--primary);">—</span></span>
-                    </div>
+            <!-- 4 Metrics Row -->
+            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:0.75rem; margin-bottom:1rem;" id="resultCards">
+                <div style="background:#f8fafc; border-radius:1rem; padding:0.75rem 0.85rem; text-align:center;">
+                    <div style="font-size:0.7rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">New Price</div>
+                    <div style="font-size:1.15rem; font-weight:800; color:var(--text-main); margin-top:0.15rem;" id="resNewPrice">—</div>
                 </div>
-                <div style="display:flex; gap:0.4rem; height:14px; border-radius:9999px; overflow:hidden;">
-                    <div id="marginBarBase" style="background:rgba(99,102,241,0.25); border-radius:9999px 0 0 9999px; transition:width 0.5s ease; height:100%;"></div>
-                    <div id="marginBarNew" style="background:var(--primary); border-radius:0 9999px 9999px 0; transition:width 0.5s ease; height:100%;"></div>
+                <div style="background:#f8fafc; border-radius:1rem; padding:0.75rem 0.85rem; text-align:center;">
+                    <div style="font-size:0.7rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Est Demand</div>
+                    <div style="font-size:1.15rem; font-weight:800; color:var(--text-main); margin-top:0.15rem;" id="resDemand">—</div>
                 </div>
-                <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-muted); margin-top:0.25rem;">
-                    <span>Base margin</span><span>New margin</span>
+                <div style="background:#f8fafc; border-radius:1rem; padding:0.75rem 0.85rem; text-align:center;">
+                    <div style="font-size:0.7rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Revenue Δ</div>
+                    <div style="font-size:1.15rem; font-weight:800; margin-top:0.15rem;" id="resRevDelta">—</div>
+                </div>
+                <div style="background:#f8fafc; border-radius:1rem; padding:0.75rem 0.85rem; text-align:center;">
+                    <div style="font-size:0.7rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">New Margin</div>
+                    <div style="font-size:1.15rem; font-weight:800; color:#3b82f6; margin-top:0.15rem;" id="marginAfter">—</div>
+                </div>
+            </div>
+
+            <!-- Margin Progress Bar -->
+            <div style="margin-bottom:1rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; font-weight:700; margin-bottom:0.35rem;">
+                    <span style="color:var(--text-muted);">Margin Progression</span>
+                    <span style="color:var(--text-muted);">Base: <span id="marginBefore" style="color:var(--text-main);">—</span></span>
+                </div>
+                <div class="progress-pill-track">
+                    <div class="progress-pill-fill" id="marginBarNew" style="width: 50%;"></div>
                 </div>
             </div>
 
             <!-- Recommendation Banner -->
-            <div id="recommendationBanner" style="display:none; border-radius:0.75rem; padding:0.75rem 1rem; font-size:0.82rem; font-weight:700; line-height:1.45; margin-bottom:0.85rem;"></div>
+            <div id="recommendationBanner" style="display:none; border-radius:1rem; padding:0.75rem 1rem; font-size:0.84rem; font-weight:700; line-height:1.45; margin-bottom:1rem;"></div>
 
-            <!-- Revenue vs Demand Chart -->
-            <div class="panel" style="margin-bottom:0.85rem;">
-                <div class="panel-header"><h2 class="panel-title">Revenue &amp; Demand Curve</h2></div>
-                <div style="height:185px;"><canvas id="simCurveChart"></canvas></div>
-            </div>
-
-            <!-- All Items Batch Simulation -->
-            <div class="panel" style="padding:0; overflow:hidden; margin-bottom:0;">
-                <div style="padding:0.75rem 1.15rem; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
-                    <h2 class="panel-title" style="margin:0;">All Items at Current Slider</h2>
-                    <button class="btn-secondary" onclick="runBatchSimulation()" id="batchBtn">Run Batch</button>
-                </div>
-                <div class="table-responsive">
-                    <table class="data-table">
-                        <thead><tr><th>Item</th><th>Base Price</th><th>New Price</th><th>Revenue Δ</th><th>Margin</th><th>Verdict</th></tr></thead>
-                        <tbody id="batchTableBody"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-muted);">Click "Run Batch" to simulate all items</td></tr></tbody>
-                    </table>
-                </div>
+            <!-- Curve Chart -->
+            <div style="height:170px; position:relative;">
+                <canvas id="simCurveChart"></canvas>
             </div>
         </div>
     </div>
 
-<style>
-.sim-label { display:block; font-size:0.78rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.45rem; }
-.sim-card { background:var(--bg-canvas); border:1px solid var(--border-color); border-radius:1.1rem; padding:1rem 1.25rem; }
-.sim-card-label { font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.3rem; }
-.sim-card-value { font-size:1.55rem; font-weight:800; color:var(--espresso-900); }
-input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--primary); box-shadow:0 2px 8px rgba(99,102,241,0.4); cursor:pointer; border:2px solid #fff; }
-</style>
+    <!-- Bottom: Batch Simulation Table -->
+    <div class="card-panel" style="padding:0; overflow:hidden;">
+        <div style="padding:1rem 1.35rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(0,0,0,0.05);">
+            <h3 class="card-panel-title" style="margin:0;">All Items at Current Slider</h3>
+            <button class="action-pill-btn" onclick="runBatchSimulation()" id="batchBtn" style="padding:0.3rem 0.85rem; font-size:0.75rem;">Run Batch</button>
+        </div>
+        <div class="table-responsive">
+            <table class="calescence-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Base Price</th>
+                        <th>New Price</th>
+                        <th>Revenue Δ</th>
+                        <th>Margin</th>
+                        <th style="text-align:right;">Verdict</th>
+                    </tr>
+                </thead>
+                <tbody id="batchTableBody">
+                    <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-muted);">Click "Run Batch" to simulate all menu items</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 <script>
 let allItems = [];
@@ -140,7 +156,7 @@ function onSliderInput(val) {
 
 function updateSliderGradient(val) {
     const pct = ((val + 30) / 80) * 100;
-    const color = val < 0 ? '#10b981' : '#6366f1';
+    const color = val < 0 ? '#10b981' : '#3b82f6';
     document.getElementById('priceSlider').style.background =
         `linear-gradient(to right, ${color} ${pct}%, #e2e8f0 ${pct}%)`;
 }
@@ -155,7 +171,7 @@ async function runSimulation() {
     const pct = parseInt(document.getElementById('priceSlider').value);
 
     const btn = document.getElementById('simBtn');
-    btn.disabled = true; btn.textContent = '⏳ Computing...';
+    btn.disabled = true;
 
     try {
         const res = await fetch(`/api/v1/simulator/simulate?itemId=${itemId}&priceChangePct=${pct}`);
@@ -164,10 +180,9 @@ async function runSimulation() {
         displayResult(currentResult);
         buildCurveChart(currentResult);
     } catch (e) {
-        alert('❌ ' + e.message);
+        console.error('Simulation error', e);
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run Simulation`;
     }
 }
 
@@ -178,23 +193,20 @@ function displayResult(r) {
     document.getElementById('resNewPrice').textContent    = `৳ ${r.newPrice?.toFixed(0)}`;
     document.getElementById('resDemand').textContent      = `${r.newDemandUnits} / day`;
     document.getElementById('resRevDelta').textContent    = `${sign(r.revenueChange)}৳ ${Math.round(r.revenueChange).toLocaleString()}`;
-    document.getElementById('resProfitDelta').textContent = `${sign(r.profitChange)}৳ ${Math.round(r.profitChange).toLocaleString()}`;
+    document.getElementById('resProfitDelta').textContent = `${sign(r.profitChange)}৳ ${Math.round(r.profitChange).toLocaleString()} profit`;
     document.getElementById('resRevDelta').style.color    = deltaColor(r.revenueChange);
-    document.getElementById('resProfitDelta').style.color = deltaColor(r.profitChange);
 
     document.getElementById('marginBefore').textContent   = `${r.baseMarginPct?.toFixed(1)}%`;
     document.getElementById('marginAfter').textContent    = `${r.newMarginPct?.toFixed(1)}%`;
-    const total = r.baseMarginPct + r.newMarginPct || 1;
-    document.getElementById('marginBarBase').style.width  = `${(r.baseMarginPct / total) * 100}%`;
-    document.getElementById('marginBarNew').style.width   = `${(r.newMarginPct  / total) * 100}%`;
+    document.getElementById('marginBarNew').style.width   = `${Math.min(100, Math.max(10, r.newMarginPct || 50))}%`;
 
     // Recommendation
     const banner = document.getElementById('recommendationBanner');
     banner.style.display = 'block';
     const isGood = r.profitChange > 0 && r.revenueChange > 0;
-    banner.style.background = isGood ? 'linear-gradient(135deg,#ecfdf5,#d1fae5)' : 'linear-gradient(135deg,#fff3cd,#fef9e7)';
-    banner.style.border      = `1px solid ${isGood ? '#a7f3d0' : '#f6c94f'}`;
-    banner.style.color       = isGood ? '#065f46' : '#92400e';
+    banner.style.background = isGood ? '#ecfdf5' : '#fff1f2';
+    banner.style.border      = `1px solid ${isGood ? '#a7f3d0' : '#fecdd3'}`;
+    banner.style.color       = isGood ? '#065f46' : '#9f1239';
     banner.textContent       = r.recommendation;
 }
 
@@ -219,17 +231,20 @@ function buildCurveChart(r) {
             datasets: [{
                 label: 'Revenue ৳',
                 data: revenues,
-                borderColor: '#6366f1',
-                backgroundColor: 'rgba(99,102,241,0.08)',
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.08)',
                 fill: true, tension: 0.4,
-                pointBackgroundColor: pcts.map((p,i) => Math.abs(p - (r.priceChangePct || 0)) < 5 ? '#6366f1' : 'rgba(99,102,241,0.4)'),
-                pointRadius: pcts.map((p) => Math.abs(p - (r.priceChangePct || 0)) < 5 ? 7 : 3),
+                pointBackgroundColor: pcts.map((p) => Math.abs(p - (r.priceChangePct || 0)) < 5 ? '#0f172a' : 'rgba(59, 130, 246, 0.4)'),
+                pointRadius: pcts.map((p) => Math.abs(p - (r.priceChangePct || 0)) < 5 ? 6 : 3),
             }]
         },
         options: {
             responsive: true, maintainAspectRatio: false,
             plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { color: 'var(--text-muted)', font: { size: 11 } } }, x: { grid: { display: false }, ticks: { color: 'var(--text-muted)', font: { size: 11 } } } }
+            scales: {
+                y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.04)', borderDash: [4, 4] }, ticks: { color: '#94a3b8', font: { size: 10 } } },
+                x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 11, weight: '600' } } }
+            }
         }
     });
 }
@@ -237,7 +252,7 @@ function buildCurveChart(r) {
 async function runBatchSimulation() {
     const pct = parseInt(document.getElementById('priceSlider').value);
     const btn = document.getElementById('batchBtn');
-    btn.disabled = true; btn.textContent = '⏳ Running...';
+    btn.disabled = true; btn.textContent = '⏳ Computing...';
 
     try {
         const res = await fetch(`/api/v1/simulator/simulate-all?priceChangePct=${pct}`);
@@ -250,14 +265,15 @@ async function runBatchSimulation() {
             const verdict  = r.profitChange > 0 && r.revenueChange > 0 ? '✅ Profitable'
                            : r.profitChange <= 0 && r.revenueChange <= 0 ? '❌ Avoid'
                            : '⚠️ Mixed';
-            const vColor   = verdict.startsWith('✅') ? '#065f46' : verdict.startsWith('❌') ? '#f43f5e' : '#92400e';
+            const vBadge   = verdict.startsWith('✅') ? 'badge-growth' : verdict.startsWith('❌') ? 'badge-danger' : 'badge-lime';
+
             return `<tr>
-                <td style="font-weight:700;">${r.itemName}</td>
+                <td><div style="font-weight:700; color:var(--text-main); font-size:0.88rem;">${r.itemName}</div></td>
                 <td>৳ ${r.basePrice?.toFixed(0)}</td>
-                <td style="font-weight:700; color:var(--primary);">৳ ${r.newPrice?.toFixed(0)}</td>
-                <td style="color:${revColor}; font-weight:700;">${revSign}৳ ${Math.abs(Math.round(r.revenueChange)).toLocaleString()}</td>
+                <td style="font-weight:800; color:var(--text-main);">৳ ${r.newPrice?.toFixed(0)}</td>
+                <td style="color:${revColor}; font-weight:800;">${revSign}৳ ${Math.abs(Math.round(r.revenueChange)).toLocaleString()}</td>
                 <td>${r.newMarginPct?.toFixed(1)}%</td>
-                <td style="font-weight:700; color:${vColor};">${verdict}</td>
+                <td style="text-align:right;"><span class="${vBadge}">${verdict}</span></td>
             </tr>`;
         }).join('');
     } catch (e) {
@@ -268,6 +284,5 @@ async function runBatchSimulation() {
 }
 </script>
 </div>
-
 </body>
 </html>
